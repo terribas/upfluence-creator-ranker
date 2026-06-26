@@ -18,6 +18,16 @@ https://upfluence-creator-ranker.vercel.app
 
 ---
 
+## Screenshots
+
+![Industry leaderboard ranked by Creator Power Score](ranking.png)
+
+![Creator detail sheet with metrics and AI brand fit analysis](creator-detail.png)
+
+![Side-by-side creator comparison modal](comparison.png)
+
+---
+
 ## What It Does
 
 - Covers **5 industries**: Beauty, Fashion, Fitness, Food, Gaming
