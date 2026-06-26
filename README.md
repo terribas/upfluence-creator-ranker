@@ -10,7 +10,7 @@ Built as part of the Upfluence Jr Growth Engineer practical assessment.
 
 ## Live Demo
 
-> Deploy URL — replace this line with your Vercel/Netlify URL once deployed.
+https://upfluence-creator-ranker.vercel.app
 
 ---
 
