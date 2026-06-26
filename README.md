@@ -4,7 +4,11 @@ A data-driven web app that ranks the top 10 Instagram creators per industry usin
 
 Built as part of the Upfluence Jr Growth Engineer practical assessment.
 
-> **How this was built:** The full development process — prompt engineering decisions, API exploration strategy, formula design, and the reasoning behind every major technical choice — is documented in [`making-of.md`](making-of.md).
+---
+
+## How It Was Built
+
+The full development story — how the API was explored before writing a line of app code, how three scoring formulas were compared and one chosen, and the reasoning behind every major technical decision — is documented in [`making-of.md`](making-of.md).
 
 ---
 
