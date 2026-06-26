@@ -1,0 +1,13 @@
+## Challenges & Tradeoffs Log
+
+- **Challenge:** Next.js `fetch` cache (`next: { revalidate }`) only applies to GET requests. The Upfluence `/v1/matches` search endpoint is a POST, so it cannot participate in Next.js's built-in ISR fetch caching. This caused `/industry/[slug]` to be classified as `ƒ (Dynamic)` at build time rather than pre-rendered.
+  **Solution/Tradeoff:** Accepted on-demand ISR behavior (Vercel CDN caches on first request, revalidates after 24h via `export const revalidate = 86400`). First visitor per industry per 24h period waits ~30s while the pipeline runs; all subsequent visitors get instant response from the CDN edge. This is acceptable for a data-driven ranking demo where freshness matters more than zero-cold-start performance.
+
+- **Challenge:** The Upfluence profile API (`GET /v1/influencers/{id}`) does not return a `biography` field inside the `instagrams[]` object (the array comes back with no keys for some profiles). The influencer bio is instead stored in `influencer.description` at the top level of the profile response.
+  **Solution/Tradeoff:** Added `description: string | null` to `UpfluenceInfluencer` type and mapped it to `bio` in `RawCreatorSignals`. Confirmed via live API test (2026-06-25).
+
+- **Challenge:** Python's `urllib` on macOS 13+ fails with `SSLCertVerificationError` for HTTPS requests because the system Python 3.13 install doesn't ship with root certificates by default.
+  **Solution/Tradeoff:** Rewrote the temporary `scripts/test-api.py` exploration script to use `curl` via `subprocess` instead of `urllib`, since `curl` uses the macOS system keychain for SSL. This is a dev-only script and not part of the production codebase.
+
+- **Challenge:** Upfluence trial API credits exhausted during development (100,530 consumed vs 100,000 allocated, confirmed via `GET /credits`). Credits reset monthly on the 1st. Each full pipeline run costs ~105 credits (1 search call + 20 profile fetches per industry × 5 industries). Multiple development sessions with cache-clearing and rebuilds accumulated consumption faster than expected.
+  **Solution/Tradeoff:** Extended the pipeline with a **disk-based fallback cache** (`/.pipeline-cache/{slug}.json`). After every successful API run, ranked results are persisted to disk outside the `.next` build directory (so they survive rebuilds). On any subsequent pipeline failure (credits exhausted, network error, etc.) the last known good data is read from disk and served. Representative sample data was seeded for the assessment review window. No code change needed once credits reset — the next successful API call automatically overwrites the seed data.
