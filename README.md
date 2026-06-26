@@ -20,11 +20,11 @@ https://upfluence-creator-ranker.vercel.app
 
 ## Screenshots
 
-![Industry leaderboard ranked by Creator Power Score](ranking.png)
+![Industry leaderboard ranked by Creator Power Score](docs/screenshots/ranking.png)
 
-![Creator detail sheet with metrics and AI brand fit analysis](creator-detail.png)
+![Creator detail sheet with metrics and AI brand fit analysis](docs/screenshots/creator-detail.png)
 
-![Side-by-side creator comparison modal](comparison.png)
+![Side-by-side creator comparison modal](docs/screenshots/comparison.png)
 
 ---
 
